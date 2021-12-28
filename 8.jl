@@ -1,13 +1,22 @@
 using HorizonSideRobots
 
 function find_way(r)
-    n=0 
+    x = 0
+    n = 0 
     side=Ost
     while isborder(r, Nord) == true
-        n+=1
+        n += 1
         moveNum!(r,side,n)
-        side=inverse(side)
+        side = inverse(side)
+        if side == Ost
+            x += n;
+        else
+            x -= n;
+        end
     end
+    move!(r, Nord)
+    moveNum!(r, side, abs(x))
+    print(x)
 end
 
 function moveNum!(r::Robot, side::HorizonSide, num_steps::Int)
@@ -16,4 +25,4 @@ function moveNum!(r::Robot, side::HorizonSide, num_steps::Int)
     end
 end
 
-inverse(side::HorizonSide)=HorizonSide(mod(Int(side)+2,4))
+inverse(side::HorizonSide) = HorizonSide(mod(Int(side)+2,4))
